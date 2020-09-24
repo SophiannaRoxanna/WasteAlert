@@ -52,7 +52,7 @@
 	}
 	
 /* Character Styles */
-.new-paragraph-black {
+/* .new-paragraph-black {
 	font-family: var(--unnamed-font-family-montserrat);
 	font-style: var(--unnamed-font-style-normal);
 	font-weight: var(--unnamed-font-weight-normal);
@@ -60,17 +60,6 @@
 	line-height: var(--unnamed-line-spacing-20);
 	letter-spacing: var(--unnamed-character-spacing-0);
 	color: var(--primary-font);
-	opacity: 0.75;
-}
-
-.p-green-secondary {
-	font-family: var(--unnamed-font-family-montserrat);
-	font-style: var(--unnamed-font-style-normal);
-	font-weight: var(--unnamed-font-weight-normal);
-	font-size: var(--unnamed-font-size-12);
-	line-height: var(--unnamed-line-spacing-24);
-	letter-spacing: var(--unnamed-character-spacing-0);
-	color: var(--green-secondary);
 	opacity: 0.75;
 }
 
@@ -93,6 +82,18 @@
 	color: var(--primary-font);
 }
 
+.p-green-secondary {
+	font-family: var(--unnamed-font-family-montserrat);
+	font-style: var(--unnamed-font-style-normal);
+	font-weight: var(--unnamed-font-weight-normal);
+	font-size: var(--unnamed-font-size-12);
+	line-height: var(--unnamed-line-spacing-24);
+	letter-spacing: var(--unnamed-character-spacing-0);
+	color: var(--green-secondary);
+	opacity: 0.75;
+}
+
+
 .paragraph-white {
 	font-family: var(--unnamed-font-family-montserrat);
 	font-style: var(--unnamed-font-style-normal);
@@ -101,9 +102,9 @@
 	line-height: var(--unnamed-line-spacing-29);
 	letter-spacing: var(--unnamed-character-spacing-0);
 	color: var(--white-bg);
-}
+} */
 
-.header-5 {
+/* .header-5 {
 	font-family: var(--unnamed-font-family-montserrat);
 	font-style: var(--unnamed-font-style-normal);
 	font-weight: 500;
@@ -151,7 +152,7 @@
 	letter-spacing: var(--unnamed-character-spacing-0);
 	color: var(--header-text);
 	opacity: 1;
-}
+} */
 
 .nav-link {
 	font-family: var(--unnamed-font-family-raleway);
@@ -178,12 +179,6 @@
 * {
 	box-sizing: border-box;
 	font-family: 'Bambino', 'Montserrat', 'Raleway', 'OpenSans',;
-}
-
-/* Variables */
-
-:root {
-	--primaryColor : rgb(50, 47, 80);
 }
 
 /* Sizing */
@@ -273,32 +268,32 @@
 
 /* Texts */
 
-p {
+/* p {
 	color: var(--primary-font);
 	font-family: 'Montserrat';
-}
+} */
 
-.small-no {
+/* .small-no {
 	color: var(--primary-font);
 	font-family: 'Montserrat';
 	font-size: var(--unamed-font-size-12);
-}
+} */
 
-.montserrat-16 {
+/* .montserrat-16 {
 	font-family: var(--unnamed-font-family-montserrat);
 	font-weight: var(--unnamed-font-weight-normal);
 	font-size: var(--unamed-font-size-12);
 	color: var(--primary-font);
 	opacity: 0.90;
-}
+} */
 
-.h4 {
+/* .h6 {
 	font-family: var(--unnamed-font-family-montserrat);
 	font-size: 20px;
 	font-weight: 600;
 	color: var(--green-secondary);
 	opacity: 0.95;
-}
+} */
 
 /* Links */
 
