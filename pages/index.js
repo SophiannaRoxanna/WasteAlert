@@ -1,66 +1,156 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
+import React, { 
+  useState, 
+  useEffect, 
+  useContext, 
+  useRef
+} from 'react'
+import styled from 'styled-components';
+import { 
+  Link,
+  useHistory
+} from 'react-router-dom';
 
-export default function Home() {
+import { useForm, ErrorMessage  } from "react-hook-form";
+
+import { themeContext } from '../lib/themeContext';
+
+import Layout from '../components/Layout';
+import { P, BigP } from '../components/Texts';
+import { InputField } from '../components/Inputs';
+
+import { PrimaryButton, LinkButton } from '../components/Button';
+
+const Main = styled.main`
+  min-height: 100vh;
+  max-width: 100vw;
+`
+
+const Home = props => {
+
+  const history = useHistory();
+ 
+  const { theme } = useContext(themeContext);
+
+  const [search, setSearch] = useState({
+    need: "",
+    zipCode: ""
+  })
+  
+  
+  const getNeed = ({need}) => {
+    need = need[0].toUpperCase() + need.slice(1);
+    setSearch({...search, need: need});
+  }
+  
+  const watchZipCode = ({target}) => {
+    const { value }  = target;
+    setSearch({...search, zipCode: value});
+  }
+  
+  const submitSearch = ({zipCode}) => {
+    setSearch({...search, zipCode: zipCode});
+    history.push(`/results/${search.need}/${search.zipCode}`);
+  }
+  
+
+  const { register, errors, handleSubmit } = useForm({
+    validateCriteriaMode: "all"
+  });
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-        Read <Link href="/dashboard/dashboard-feed"><a>this page!</a></Link>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-            <h3 className={styles.card}>Documentation &rarr;
-              Build <Link href="first-page"><a>this page!</a></Link> 
-            </h3>
-            <p className="mt-10">Find in-depth information about Next.js features and API.</p>
-          
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+    <Layout>
+      <Main className=" px-6 lg:px-0 ">
+        <section className="py-32 w-full md:w-4/5 lg:w-3/5 mx-auto">
+          <P 
+            fontSize="18px"
+            color={theme.lightFont}
+            className={search.need !== "" && "opacity-25"}
           >
-            <h3>Examples &rarr;</h3>
-            <p className="mx-4">Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            How can we help you?
+          </P>
+          <form onSubmit={handleSubmit(getNeed)} className="w-full">
+            <div className={`flex flex-wrap md:flex-no-wrap items-end mt-6 max-w-full ${search.need !== "" ? "opacity-25" : ""}`}>
+              <BigP
+                color={theme.primaryFont}
+                className="mr-6 md:flex-shrink-0"
+              >
+                I need
+              </BigP>
+              <InputField
+                type="text"
+                id="need"
+                name="need"
+                w="135px"
+                largeW="170px"
+                ref={register()}
+                className="w-full"
+                fontSize="54px"
+                color={theme.purpleFont}
+                onFocus={() => setSearch({need: "", zipCode: ""})}
+              />
+            </div>
+          </form>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+          {
+            search.need !== "" && (
+              <form onSubmit={handleSubmit(submitSearch)} className="w-full">
+                <div className="flex flex-wrap md:flex-no-wrap items-end mt-6 max-w-full">
+                  <BigP
+                    color={theme.primaryFont}
+                    className="mr-6 md:flex-shrink-0"
+                  >
+                    My zipcode is
+                  </BigP>
+                  <InputField
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    w="135px"
+                    largeW="170px"
+                    ref={register({
+                      maxLength: {
+                        value: 5,
+                      }
+                    })}
+                    maxLength={5}
+                    fontSize="54px"
+                    color={theme.purpleFont}
+                    onChange={watchZipCode}
+                    // onFocus={() => setSearch({...search, zipCode: ""})}
+                    autoFocus={search.need !== "" && true}
+                  />
+                </div>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+                {
+                  search.zipCode.length >= 5 && (
+                    <PrimaryButton className="mt-16">
+                      Search
+                    </PrimaryButton>
+                  )
+                }
+
+                {
+                  search.zipCode.length < 5 && (
+                    <LinkButton
+                      color={theme.purpleFont}
+                      fontSize="24px"
+                      smallSize="18px"
+                      className="mt-10 block"
+                    >
+                      Use current location
+                    </LinkButton>
+                  )
+                }
+              </form>
+            )
+          }
+
+
+
+        </section>
+      </Main>
+    </Layout>
   )
 }
+
+export default Home;

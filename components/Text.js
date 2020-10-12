@@ -59,6 +59,10 @@ export const H1 = styled.h1`
   font-weight: ${unnamed_font_weight_600};
   line-height: ${unnamed_line_spacing_39};
   letter-spacing: ${unnamed_character_spacing_0};
+
+  @media (max-width: 600px) {
+    font-size: ${props => props.smallSize || "27px"}
+  }
 `
 
 export const H2 = styled.h2`
@@ -69,6 +73,10 @@ export const H2 = styled.h2`
   line-height: ${unnamed_line_spacing_39};
   letter-spacing: ${unnamed_character_spacing_0};
   color: ${props => props.color || primary_font};
+  
+  @media (max-width: 600px) {
+    font-size: ${props => props.smallSize || "27px"}
+  }
 `
 
 export const H3 = styled.h3`
@@ -79,6 +87,10 @@ export const H3 = styled.h3`
   line-height: ${unnamed_line_spacing_29};
   letter-spacing: ${unnamed_character_spacing_0};
   color: ${props => props.color || accent};
+
+  @media (max-width: 600px) {
+    font-size: ${props => props.smallSize || "27px"}
+  }
 `
 
 export const H4 = styled.h4`
@@ -113,6 +125,9 @@ export const BigP = styled.p`
   font-size: ${props => props.fontSize || unnamed_font_size_16};
   color: ${props => props.color || primary_font};
   opacity: 0.90;
+  
+  @media (max-width: 600px) {
+    font-size: ${props => props.smallSize || "36px"}
 `
 
 export const MediumP = styled.p`
@@ -129,6 +144,10 @@ export const SmallP = styled.p`
   font-size: ${props => props.fontSize || unnamed_font_size_12};
   color: ${props => props.color || primary_font};
   opacity: 0.90;
+
+  @media (max-width: 600px) {
+    font-size: ${props => props.smallSize || "16px"}
+  }
 `
 
 export const NewPBlack = styled.p`
@@ -181,4 +200,10 @@ export const PWhite = styled.p`
 	line-height: ${unnamed_line_spacing_29};
   letter-spacing: ${unnamed_character_spacing_0};
   color: ${props => props.color || white_bg};
+`
+
+export const TextLink = styled.p`
+  font-size: ${props => props.fontSize || "14px"};
+  font-family: ${props => props.fontFamily || "regular"};
+  color: ${props => props.color};
 `
