@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components';
-import { TextLink, H5 } from './Texts';
-import { HeaderButton } from './Buttons';
-import {
-  Link
-} from 'react-router-dom';
-
-import { themeContext } from '../lib/themeContext';
-
-import styles from '../pages/_app'
+import { TextLink, H5 } from '../components/Text';
+import { HeaderButton } from '../components/Button';
 
 const HeaderStyle = styled.header`
   // width: 100vw;
@@ -55,7 +48,6 @@ const MenuToggle = styled.button`
 
 const Header = props => {
 
-  const { theme, toggleTheme, isDark } = useContext(themeContext);
 
   const toggleMenu = () => {
 
@@ -63,62 +55,18 @@ const Header = props => {
 
   return (
     <HeaderStyle 
-      bg={theme.background}
       className="sticky inset-0 mx-auto flex justify-between items-center"
     >
-      {/* LOGO */}
-      {!isDark ? (
-        <Link to="/">
-          <img src={logo} alt="" />
-        </Link>
-      ) : (
-        <Link to="/">
-          <img src={darkLogo} alt="" />
-        </Link>
-      )}
-
-      {/* Right Navbar */}
-      <nav className="hidden md:flex justify-between items-center">
-        <Link to="/suggest"
-          className="mr-6"
-        >
-          <TextLink
-            color={theme.lightFont}
-            >
-            Suggest new entry
-          </TextLink>
-        </Link>
-        <Link to="/createAccount"
-          className="mr-6"
-        >
-          <HeaderButton
-          >
-            Get Started
-          </HeaderButton>
-        </Link>
-        <ThemeToggle 
-          role="button" 
-          className="p-2"
-          onClick={toggleTheme}
-          >
-          <img 
-            src={isDark ? sunIcon : moonIcon} 
-            alt="" 
-            className="object-cover"
-          />
-        </ThemeToggle>
-      </nav>
-
+  
       {/* Mobile Navbar */}
       <nav className="flex md:hidden  justify-between items-center">
         
         <ThemeToggle 
           role="button" 
           className="p-2"
-          onClick={toggleTheme}
           >
           <img 
-            src={isDark ? sunIcon : moonIcon} 
+            src={""} 
             alt="" 
             className="object-cover" 
           />
@@ -130,7 +78,7 @@ const Header = props => {
           onClick={toggleMenu}
           >
           <img 
-            src={isDark ? navToggleLight : navToggleDark} 
+            src={""} 
             alt="" 
             className="object-cover" 
           />

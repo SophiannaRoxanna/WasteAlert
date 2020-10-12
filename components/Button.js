@@ -16,23 +16,24 @@ export const HeaderButton = styled.button`
 `
 
 export const PrimaryButton = styled.button`
-  background: ${props => props.bg || "#442ECF"};
+  background: ${props => props.bg || "#005105"};
+  width: ${props => props.width || "fit-content"};
   color: ${props => props.color || "#F5F4FA"};
-  color: ${props => props.disabled && "#B4B0D1"};
-  background: ${props => props.disabled && "#F5F4FA"};
   font-size: ${props => props.fontSize || "14px"};
-  font-family: ${props => props.fontFamily || "semi"};
-  padding: ${props => props.p || "14px 24px"};
+  font-family: ${props => props.fontFamily || "inherit"};
+  padding: ${props => props.p || "12px 40px"};
   border-radius: 3px;
+  transition: 0.3s ease-in-out;
 
   &:hover {
-    background: ${props => props.hoverBg};
-    background: ${props => props.disabled && "#F5F4FA"};
+    background: #ffffff;
+    color: ${props => props.color || "#005105"};
+    border: 1px solid #005105;
     cursor: ${props => props.disabled && "not-allowed"};
   }
 
   &:focus {
-    border-color: #442ECF50;
+    border-color:  #005105;
     outline-color: #442ECF50;
   }
 `

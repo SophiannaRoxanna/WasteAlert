@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components';
-import {
-  Link
-} from 'react-router-dom';
 
-import { themeContext } from '../lib/themeContext';
-import Header from './Headers';
-import styles from '../styles/layout.module.css'
+import Header from '../components/Headers';
 
 const LayoutStyle = styled.main`
   background: ${props => props.theme.background};
@@ -14,10 +9,8 @@ const LayoutStyle = styled.main`
 
 const Layout = props => {
 
-  const { theme, toggleTheme } = useContext(themeContext)
-
   return (
-    <LayoutStyle theme={theme}>
+    <LayoutStyle>
       <Header />
       {props.children}
     </LayoutStyle>
@@ -51,3 +44,24 @@ export const ThemeLessLayout = props => {
 export const DashboardLayout = styled.main`
   grid-template-columns: 1fr 17fr;
 `
+
+const LoginStyle = styled.main`
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  
+`
+
+export const Login = props => {
+
+  return (
+    <LoginStyle>
+      <img 
+        src="/images/clean.jpg" 
+        alt="aside-image" 
+        className=" h-screen object-cover"
+      />
+      {props.children}
+    </LoginStyle>
+  )
+}

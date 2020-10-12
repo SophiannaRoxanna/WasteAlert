@@ -106,7 +106,7 @@ export const H5 = styled.h5`
   font-family: ${unnamed_font_family_montserrat};
   font-style: ${unnamed_font_style_normal};
   font-weight: ${unnamed_font_weight_500};
-  font-size: ${props => props.fontSize || unnamed_font_size_18};
+  font-size: ${props => props.fontSize || 15};
   letter-spacing: ${unnamed_character_spacing_0};
   color: ${props => props.color || header_text};
 `
@@ -122,10 +122,10 @@ export const H6 = styled.h6`
 export const BigP = styled.p`
   font-family: ${unnamed_font_family_montserrat};
   font-weight: ${unnamed_font_weight_normal};
-  font-size: ${props => props.fontSize || unnamed_font_size_16};
+  font-size: ${props => props.fontSize || "18px"};
   color: ${props => props.color || primary_font};
-  opacity: 0.90;
-  
+  opacity: 1; 
+
   @media (max-width: 600px) {
     font-size: ${props => props.smallSize || "36px"}
 `
@@ -141,7 +141,7 @@ export const MediumP = styled.p`
 export const SmallP = styled.p`
   font-family: ${unnamed_font_family_montserrat};
   font-weight: ${unnamed_font_weight_normal};
-  font-size: ${props => props.fontSize || unnamed_font_size_12};
+  font-size: ${props => props.fontSize || "12px"};
   color: ${props => props.color || primary_font};
   opacity: 0.90;
 
@@ -165,7 +165,7 @@ export const PBlack = styled.p`
   font-family: ${unnamed_font_family_montserrat};
   font-style: ${unnamed_font_style_normal};
   font-weight: ${unnamed_font_weight_normal};
-	font-size: ${props => props.fontSize || unnamed_font_size_18};
+	font-size: ${props => props.fontSize || 18};
 	line-height: ${unnamed_line_spacing_29};
   letter-spacing: ${unnamed_character_spacing_0};
   color: ${props => props.color || primary_font};

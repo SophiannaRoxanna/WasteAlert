@@ -1,9 +1,9 @@
 import React, { useState, useContext, useRef } from 'react'
 import styled from 'styled-components';
 
-import { themeContext } from '../lib/themeContext';
+// import { themeContext } from '../lib/themeContext';
 
-import { P } from './Texts';
+import { MediumP } from './Text';
 
 export const InputGroup = styled.input`
   width: ${props => props.width || "90%"};
@@ -376,7 +376,7 @@ export const InputField = styled.input`
   transition: 0.3s ease-out;
 
   border: none;
-  border-bottom: 2px solid ${props => props.borderColor || props.color};
+  border-bottom: 2px solid rgb(233, 235, 245);
 
   &:placeholder {
     color: #26262645;
@@ -384,7 +384,12 @@ export const InputField = styled.input`
 
   &:focus {
     outline: none;
-  } 
+    border-bottom: 2px solid ${props => props.borderColor || props.color};
+  }
+
+  &:hover {
+    
+  }
 
   &:-internal-autofill-selected {
     color: ${props => props.color} !important;
