@@ -8,9 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hookform/error-message": "0.0.4",
     "next": "9.5.3",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-hook-form": "^6.9.2",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {

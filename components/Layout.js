@@ -45,23 +45,23 @@ export const DashboardLayout = styled.main`
   grid-template-columns: 1fr 17fr;
 `
 
-const LoginStyle = styled.main`
+const FormStyle = styled.main`
   display: grid;
   min-height: 100vh;
   grid-template-columns: 1fr 1fr;
   
 `
 
-export const Login = props => {
+export const Form = props => {
 
   return (
-    <LoginStyle>
+    <FormStyle>
       <img 
         src="/images/clean.jpg" 
         alt="aside-image" 
-        className=" h-screen object-cover"
+        className="h-full min-h-screen object-cover"
       />
       {props.children}
-    </LoginStyle>
+    </FormStyle>
   )
 }

@@ -1,225 +1,299 @@
-import React, { 
-  useState, 
-  useEffect, 
-  useContext, 
-  useRef 
-} from 'react';
-import styled from 'styled-components';
-import {
-  Link,
-  useHistory
-} from 'react-router-dom';
+import React, { useRef } from 'react'
+import Link from "next/link"
 
-import { themeContext } from '../lib/themeContext';
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
 
+import base_url from "../api/base_url";
 
-import eyeIcon from "../assets/eye-off.svg";
+import { H5, H3, PBlack, SmallP, BigP } from '../../components/Text'
+import { Form } from '../../components/Layout'
+import { InputField, CheckBox } from '../../components/Inputs'
+import { PrimaryButton } from '../../components/Button'
 
-import { P, BigP, H2, H6, TextLink } from '../components/Texts';
-import { InputField, DarkFormField, CheckBox } from '../../components/Inputs';
-import { PrimaryButton, OutlineButton } from '../components/Buttons';
-import { ThemeLessLayout } from '../../components/Layout';
-import FormCard from '../components/FormCard';
+const SignUp = () => {
 
-const SignUpPage = props => {
-  let history = useHistory();
+  const onLogin = data => {
 
-  const [passwordType, setPasswordType] = useState("password");
-  const [show, setShow] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [userData, setUserData] = useState({});
+    let formdata = new FormData();
+    formdata.append("u_name", data.uname);
+    formdata.append("u_firstname", data.fname);
+    formdata.append("u_lastname", data.lname);
+    formdata.append("u_email", data.email);
+    formdata.append("u_password", data.password);
 
-  const onSignUp = data => {
-    setSubmitted(true);
-    setUserData(data);
-    setTimeout(() => {
-      history.push("/login");
-    }, 6000);
+    let requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+    // history.push("/dashboard/explore");
+    fetch(`${base_url}/register`, requestOptions)
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
   }
 
-  const showPassword = () => {
-    console.log("clicked", show)
-    if (show) {
-      setShow(false)
-      setPasswordType("password");
-    } else {
-      setShow(true)
-      setPasswordType("text")
-    }
-  }
-  
-  const { register, errors, handleSubmit } = useForm({
+  const { register, errors, handleSubmit, watch } = useForm({
     validateCriteriaMode: "all"
   });
+  
+  const Password = useRef({});
+  Password.current = watch("password", "");
+
 
   return (
-    <ThemeLessLayout>
-      <FormCard
-        pVertical="64px"
-        pHorizontal="56px"
-        maxW="476px"
-      >
-        {!submitted ? (
-          <>
-            <H6 color="#22202D" fontSize="18px" className="mb-12">
-              Sign up to share, access, and work with your data.
-            </H6>
+    <div>
+      <Form>
+        <form
+          onSubmit={handleSubmit(onLogin)} 
+          className="max-h-screen overflow-y-auto "
+        >
+        <div className="flex flex-col mx-auto mt-8 space-y-3 lg:w-4/6 pb-10">
+          <img src="/images/logo_text.svg" alt="logo-text" />
+          <BigP>
+            Welcome! Please complete to create your account.
+          </BigP>
 
-            <form onSubmit={handleSubmit(onSignUp)}>
-              <DarkFormField 
+          <div className="inputs flex flex-col">
+            <div className="flex justify-between space-x-3">
+              <InputField
                 type="text"
-                id="name"
-                name="name"
-                w="135px"
-                ref={register({
-                  required: "Name is required",
-                  minLength: {
-                    value: 3,
-                    message: "Please enter your full name"
-                  }
+                id="fname"
+                name="fname"
+                placeholder="Firstname"
+                className="p-4"
+                ref={
+                  register({
+                    required: "First name is required."
                 })}
-                placeholder="Enter your full name"
-                label="Name"
-                className="w-full"
-              />
+              >
+              </InputField>
+
+
+              <InputField
+                type="text"
+                id="lname"
+                name="lname"
+                className="p-4"
+                placeholder="Lastname"
+                ref={
+                  register({
+                    required: "Last name is required."
+                })}
+              >
+              </InputField>
+
+            </div>
+            <div className="flex items-center justify-between">
               <ErrorMessage 
                 errors={errors} 
-                name="name" 
-                as={<P 
+                name="fname" 
+                as={<SmallP 
                   fontSize="12px"
-                  className="-mt-4 mb-4 text-red-400 text-sm"
+                  className="mt-1 mb-1 text-red-400 text-sm"
                 />}
               >
                 {({ messages }) =>
                   messages &&
                   Object.entries(messages).map(([type, message]) => (
-                    <P key={type} >{message}</P>
+                    <SmallP key={type} >{message}</SmallP>
                   ))
                 }
               </ErrorMessage>
 
-              <DarkFormField 
+              <ErrorMessage 
+                errors={errors} 
+                name="lname" 
+                as={<SmallP 
+                  fontSize="12px"
+                  className="mt-1 mb-1 text-red-400 text-sm"
+                />}
+              >
+                {({ messages }) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <SmallP key={type} >{message}</SmallP>
+                  ))
+                }
+              </ErrorMessage>
+
+            </div>
+
+              <InputField
+                type="text"
+                id="uname"
+                name="uname"
+                placeholder="Username"
+                className="mt-2 p-4"
+                ref={
+                  register({
+                    required: "Username is required.",
+                    pattern: {
+                      message: "Please enter a username."
+                    }
+                })}
+              >
+              </InputField>
+
+              <ErrorMessage 
+              errors={errors} 
+              name="uname" 
+              as={<SmallP 
+                fontSize="12px"
+                className="mt-1 mb-1 text-red-400 text-sm"
+              />}
+              >
+              {({ messages }) =>
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <SmallP key={type} >{message}</SmallP>
+                ))
+                }
+              </ErrorMessage>
+
+              <InputField
                 type="email"
                 id="email"
                 name="email"
-                w="135px"
-                ref={register({
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                    message: "Please enter a valid email."
-                  }
+                placeholder="Email"
+                className="mt-2 p-4"
+                ref={
+                  register({
+                    required: "Email is required.",
+                    pattern: {
+                      value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                      message: "Please enter a valid email."
+                    }
                 })}
-                placeholder="example@mail.com"
-                label="Email"
-                className="w-full"
-              />
-              <ErrorMessage 
-                errors={errors} 
-                name="email" 
-                as={<P 
-                  fontSize="12px"
-                  className="-mt-4 mb-4 text-red-400 text-sm"
-                />}
               >
-                {({ messages }) =>
-                  messages &&
-                  Object.entries(messages).map(([type, message]) => (
-                    <P key={type} >{message}</P>
-                  ))
-                }
+              </InputField>
+
+              <ErrorMessage 
+              errors={errors} 
+              name="email" 
+              as={<SmallP 
+                fontSize="12px"
+                className="mt-1 mb-1 text-red-400 text-sm"
+              />}
+              >
+              {({ messages }) =>
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <SmallP key={type} >{message}</SmallP>
+                ))
+              }
               </ErrorMessage>
 
-              <DarkFormField 
-                type={passwordType}
+              <InputField
+                type="password"
                 id="password"
                 name="password"
-                w="135px"
+                placeholder="Password"
+                className="mt-2 p-4"
                 ref={register({
                   required: "Password is required.",
                   minLength: {
                     value: 8,
-                    message: "Password must be at least 8 characters"
+                    message: "Password must be at least 8 characters long"
                   }
                 })}
-                icon={eyeIcon}
-                iconClick={showPassword}
-                placeholder="Use a strong password"
-                label="Password"
-                className="w-full"
-              />
-              <ErrorMessage 
-                errors={errors} 
-                name="password" 
-                as={<P 
-                  fontSize="12px"
-                  className="-mt-4 mb-4 text-red-400 text-sm"
-                />}
               >
-                {({ messages }) =>
-                  messages &&
-                  Object.entries(messages).map(([type, message]) => (
-                    <P key={type} >{message}</P>
-                  ))
-                }
+              </InputField>
+
+              <ErrorMessage 
+              errors={errors} 
+              name="password" 
+              as={<SmallP 
+                fontSize="12px"
+                className="mt-1 mb-1 text-red-400 text-sm"
+              />}
+              >
+              {({ messages }) =>
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <SmallP key={type} >{message}</SmallP>
+                ))
+              }
               </ErrorMessage>
 
-              <PrimaryButton
-                className="w-full"
+              <InputField
+                type="password"
+                id="cpassword"
+                name="cpassword"
+                placeholder="Confirm Password"
+                className="mt-2 p-4"
+                ref={
+                  register({
+                    pattern: {
+                      value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*$/,
+                      message: "Please enter a valid password."
+                    },
+                    validate: (value) => value === Password.current || "The passwords do not match"
+                })}
               >
-                Sign up
-              </PrimaryButton>
+              </InputField>
 
-            </form>
-
-            <div className="text-center mt-12">
-              <Link to="/login">
-                <TextLink
-                  color="#442ECF"
-                  fontFamily="semi"
-                >
-                  Have an account already?
-                </TextLink>
-              </Link>
+              <ErrorMessage 
+              errors={errors} 
+              name="cpassword" 
+              as={<SmallP 
+                fontSize="12px"
+                className="mt-1 mb-1 text-red-400 text-sm"
+              />}
+              >
+              {({ messages }) =>
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <SmallP key={type} >{message}</SmallP>
+                ))
+              }
+              </ErrorMessage>
+           
+          <div className="md:flex md:justify-between mt-6 mx-auto">
+            <div className="flex items-center">
+              <CheckBox
+                name="rememberMe"
+                id="rememberMe"
+                className="w-3 h-4"
+                color="#"
+                required
+              />
+              <label htmlFor="rememberMe">
+              <PBlack
+                fontSize="16px"
+                color="#616161"
+                className="ml-2 cursor-pointer"
+              >
+                I agree with terms and conditions.
+              </PBlack>
+              </label>
             </div>
-          </>
-        ) : (
-          <>
-            <P color="#5F5D77">
-              Thanks for signing up to share and have access to your 
-              data with Social Safety. All you have to do is confirm 
-              the email sent to <span className="semi mr-2" style={{
-                color: "#22202D"
-              }}>
-                {userData?.email}
-              </span>
-            </P>
-          </>
-        )}
+          </div>
 
-      </FormCard>
+            <PrimaryButton className="mt-8 mx-auto">
+              SIGN UP
+            </PrimaryButton>
 
-      <div className="mt-16 flex justify-center">
-        <Link to="/privacy">
-          <TextLink
-            color="#FFFFFF"
-          >
-            Privacy
-          </TextLink>
-        </Link>
-        <Link to="/terms">
-          <TextLink
-            color="#FFFFFF"
-            className="md:ml-2"
-          >
-            Terms
-          </TextLink>
-        </Link>
-      </div>
-    </ThemeLessLayout>
+            <div className="flex mt-6 mx-auto space-x-1">
+              <PBlack>
+                Already have an account?
+              </PBlack>
+              <Link href="/dashboard/login">
+              <a className="font-bold">
+                Sign in
+              </a>
+              </Link>
+
+            </div>
+            
+          </div>
+        </div>
+      </form>
+          
+      </Form>
+    </div>
   )
 }
 
-export default SignUpPage;
+export default SignUp;

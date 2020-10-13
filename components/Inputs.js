@@ -24,12 +24,14 @@ export const CheckBoxStyle = styled.input`
 
 export const CheckBox = React.forwardRef(({
   className,
+  label,
   id,
   name
 }, ref) => {
   return (
     <CheckBoxStyle 
       type="checkbox"
+      label={label}
       ref={ref}
       name={name}
       id={id}

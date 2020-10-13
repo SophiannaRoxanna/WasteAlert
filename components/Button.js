@@ -24,6 +24,7 @@ export const PrimaryButton = styled.button`
   padding: ${props => props.p || "12px 40px"};
   border-radius: 3px;
   transition: 0.3s ease-in-out;
+  border: 1px solid transparent;
 
   &:hover {
     background: #ffffff;

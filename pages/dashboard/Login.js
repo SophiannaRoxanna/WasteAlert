@@ -1,192 +1,148 @@
-import React, { 
-  useState, 
-  useEffect, 
-  useContext, 
-  useRef,
-} from 'react';
-import styled from 'styled-components';
-import {
-  Link,
-  useHistory 
-} from 'react-router-dom';
+import React from 'react'
+import Link from "next/link";
 
-import { themeContext } from '../lib/themeContext';
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
 
-import eyeIcon from "../assets/eye-off.svg";
+import { H5, H3, PBlack, SmallP, BigP } from '../../components/Text'
+import { Form } from '../../components/Layout'
+import { InputField, CheckBox } from '../../components/Inputs'
+import { PrimaryButton } from '../../components/Button'
 
-import { P, BigP, H2, H6, TextLink } from '../components/Texts';
-import { InputField, DarkFormField, CheckBox } from '../../components/Inputs';
-import { PrimaryButton, OutlineButton } from '../components/Buttons';
-import { ThemeLessLayout } from '../../components/Layout';
-import FormCard from '../components/FormCard';
-
-const LoginPage = props => {
-  let history = useHistory();
-
-  const [passwordType, setPasswordType] = useState("password");
-  const [show, setShow] = useState(false);
+const Login = () => {
 
   const onLogin = data => {
     console.log(data)
-    history.push("/dashboard/explore");
+    console.log("form submitted")
+    // history.push("/dashboard/explore");
   }
 
-  const showPassword = () => {
-    console.log("clicked", show)
-    if (show) {
-      setShow(false)
-      setPasswordType("password");
-    } else {
-      setShow(true)
-      setPasswordType("text")
-    }
-  }
-  
   const { register, errors, handleSubmit } = useForm({
     validateCriteriaMode: "all"
   });
 
   return (
-    <ThemeLessLayout>
-      <FormCard
-        pVertical="64px"
-        pHorizontal="56px"
-        maxW="476px"
-      >
-        <H6 color="#22202D" fontSize="18px" className="mb-12">
-          Sign in to share, access, and work with your data.
-        </H6>
+    <div>
+      <Form>
+        <form 
+          onSubmit={handleSubmit(onLogin)} 
+          className="flex flex-col mx-auto justify-center space-y-3"
+        >
+          <img src="/images/logo_text.svg" alt="logo-text" />
+          <BigP>
+            Welcome back! Please login to your account.
+          </BigP>
 
-        <form onSubmit={handleSubmit(onLogin)}>
-          <DarkFormField 
-            type="email"
-            id="email"
-            name="email"
-            ref={register({
-              required: "Email is required.",
-              pattern: {
-                value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                message: "Please enter a valid email."
+          <div className="inputs flex flex-col">
+            <InputField
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Email"
+              required
+              className="mt-8 p-4"
+              ref={
+                register({
+                  required: "Email is required.",
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Please enter a valid email."
+                  }
+              })}
+            >
+            </InputField>
+
+            <ErrorMessage 
+              errors={errors} 
+              name="email" 
+              as={<SmallP 
+                fontSize="12px"
+                className="mt-1 mb-1 text-red-400 text-sm"
+              />}
+            >
+              {({ messages }) =>
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <SmallP key={type} >{message}</SmallP>
+                ))
               }
-            })}
-            placeholder="example@mail.com"
-            label="Email"
-            className="w-full"
-          />
-          <ErrorMessage 
-            errors={errors} 
-            name="email" 
-            as={<P 
-              fontSize="12px"
-              className="-mt-4 mb-4 text-red-400 text-sm"
-            />}
-          >
-            {({ messages }) =>
-              messages &&
-              Object.entries(messages).map(([type, message]) => (
-                <P key={type} >{message}</P>
-              ))
-            }
-          </ErrorMessage>
+            </ErrorMessage>
 
-          <DarkFormField 
-            type={passwordType}
-            id="password"
-            name="password"
-            ref={register({
-              required: "Password is required.",
-            })}
-            icon={eyeIcon}
-            iconClick={showPassword}
-            placeholder="Use a strong password"
-            label="Password"
-            className="w-full"
-          />
-          <ErrorMessage 
-            errors={errors} 
-            name="password" 
-            as={<P 
-              fontSize="12px"
-              className="-mt-4 mb-4 text-red-400 text-sm"
-            />}
-          >
-            {({ messages }) =>
-              messages &&
-              Object.entries(messages).map(([type, message]) => (
-                <P key={type} >{message}</P>
-              ))
-            }
-          </ErrorMessage>
+            <InputField
+              placeholder="Password"
+              id="password"
+              name="password"
+              ref={register({
+                required: "Password is required.",
+              })}
+              className="mt-2 p-4"
+            >
+            </InputField>
+            <ErrorMessage 
+              errors={errors} 
+              name="password" 
+              as={<SmallP 
+                fontSize="12px"
+                className="mt-1 mb-1 text-red-400 text-sm"
+              />}
+            >
+              {({ messages }) =>
+                messages &&
+                Object.entries(messages).map(([type, message]) => (
+                  <SmallP key={type} >{message}</SmallP>
+                ))
+              }
+            </ErrorMessage>
 
-          <PrimaryButton
-            className="w-full"
-          >
-            Sign in
-          </PrimaryButton>
-
-          <div className="md:flex md:justify-between mt-4">
+           
+          <div className="md:flex md:justify-between mt-8">
             <div className="flex items-center">
               <CheckBox
-                ref={register()}
                 name="rememberMe"
                 id="rememberMe"
-                className="w-5 h-5"
+                className="w-3 h-4"
+                color="#"
               />
-             <label htmlFor="rememberMe">
-              <P
-                fontSize="14px"
-                color="#2A2C3F"
+              <label htmlFor="rememberMe">
+              <PBlack
+                fontSize="16px"
+                color="#616161"
                 className="ml-2 cursor-pointer"
               >
                 Remember me
-              </P>
-             </label>
+              </PBlack>
+              </label>
             </div>
-            <Link to="/forgotPassword">
-              <TextLink
-                color="#442ECF"
-                fontFamily="semi"
+              <Link 
+                href="/forgotPassword"
               >
-                Forgot Password?
-              </TextLink>
-            </Link>
+                Forgot Password
+              </Link>
+          </div>
+
+            <PrimaryButton
+              className="mt-10 mx-auto"
+            >
+              LOGIN
+            </PrimaryButton>
+
+            <div className="mt-8 mx-auto font-bold">
+              <Link 
+                href="/dashboard/signUp"
+              >
+                <a>
+                  Create an account
+                </a>
+              </Link>
+
+            </div>
+            
           </div>
         </form>
-
-        <div className="text-center mt-12">
-          <Link to="/createAccount">
-            <TextLink
-              color="#442ECF"
-              fontFamily="semi"
-            >
-              Create an account
-            </TextLink>
-          </Link>
-        </div>
-
-      </FormCard>
-
-      <div className="mt-16 flex justify-center">
-        <Link to="/privacy">
-          <TextLink
-            color="#FFFFFF"
-          >
-            Privacy
-          </TextLink>
-        </Link>
-        <Link to="/terms">
-          <TextLink
-            color="#FFFFFF"
-            className="md:ml-2"
-          >
-            Terms
-          </TextLink>
-        </Link>
-      </div>
-    </ThemeLessLayout>
+          
+      </Form>
+    </div>
   )
 }
 
-export default LoginPage;
+export default Login;
